@@ -35,11 +35,60 @@
         .year-heading { font-size: 20px; font-weight: bold; margin-top: 40px; margin-bottom: 10px; border-bottom: 2px solid #333; display: inline-block; }
         .month-heading { font-size: 16px; font-weight: 600; color: #555; margin-top: 20px; margin-bottom: 10px; margin-left: 10px; }
         
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .post-list { list-style: none; padding: 0; }
-        .post-item { display: flex; align-items: baseline; margin-bottom: 10px; margin-left: 20px; }
+        .post-item { 
+            display: flex; 
+            align-items: baseline; 
+            margin-bottom: 15px; 
+            margin-left: 20px;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0; /* Hidden initially */
+        }
+        /* Staggered animation delay */
+        .post-item:nth-child(1) { animation-delay: 0.1s; }
+        .post-item:nth-child(2) { animation-delay: 0.15s; }
+        .post-item:nth-child(3) { animation-delay: 0.2s; }
+        .post-item:nth-child(4) { animation-delay: 0.25s; }
+        .post-item:nth-child(5) { animation-delay: 0.3s; }
+        .post-item:nth-child(n+6) { animation-delay: 0.35s; }
+
         .post-date { width: 30px; font-size: 14px; color: var(--meta-color); flex-shrink: 0; }
-        .post-link { font-size: 16px; color: var(--link-color); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
-        .post-link:hover { border-bottom-color: var(--hover-color); }
+        
+        .post-link { 
+            font-size: 16px; 
+            color: var(--link-color); 
+            text-decoration: none; 
+            position: relative;
+            display: inline-block;
+        }
+        
+        .post-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--hover-color);
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+        
+        .post-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        .post-link:hover {
+            color: #555;
+        }
         
         footer { margin-top: 80px; font-size: 12px; color: var(--meta-color); text-align: center; }
     </style>
@@ -66,7 +115,7 @@
                 {% assign post_month = page.date | date: "%B" %}
                 
                 {% if post_year != current_year %}
-                    <div class="year-group">
+                    <div class="year-group" style="animation: fadeIn 0.5s ease-out;">
                         <h2 class="year-heading">{{ post_year }}</h2>
                     </div>
                     {% assign current_year = post_year %}
@@ -74,7 +123,7 @@
                 {% endif %}
 
                 {% if post_month != current_month %}
-                    <h3 class="month-heading">{{ post_month }}</h3>
+                    <h3 class="month-heading" style="animation: fadeIn 0.5s ease-out 0.1s; opacity:0; animation-fill-mode: forwards;">{{ post_month }}</h3>
                     {% assign current_month = post_month %}
                 {% endif %}
 
@@ -89,8 +138,8 @@
 
 <footer>
     <div style="margin-bottom: 20px;">
-        <!-- Using Theme Gray to Dark for contrast -->
-        <img src="https://ghchart.rshah.org/212121/Park-hyojoon" alt="Github Contribution Graph" style="width: 100%; max-width: 680px;">
+        <!-- High Contrast Graph: 151515 produces good grey steps -->
+        <img src="https://ghchart.rshah.org/151515/Park-hyojoon" alt="Github Contribution Graph" style="width: 100%; max-width: 680px;">
     </div>
     &copy; {{ site.time | date: "%Y" }} Park-hyojoon. Powered by GitHub Pages.
 </footer>
