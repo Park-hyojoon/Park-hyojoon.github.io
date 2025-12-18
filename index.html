@@ -1,73 +1,105 @@
+---
+layout: default
+title: Home
+---
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Park-hyojoon의 포트폴리오</title>
+    <title>{{ site.title }}</title>
     <style>
         :root {
-            --primary: #6366f1;
-            --bg: #0f172a;
-            --text: #f8fafc;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --link-color: #000000;
+            --meta-color: #888888;
+            --hover-color: #000000;
         }
         body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
-        .container {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-out;
+        header {
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
         }
         h1 {
-            font-size: 3rem;
-            background: linear-gradient(to right, #818cf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
         }
-        p {
-            color: #94a3b8;
-            font-size: 1.2rem;
+        .subtitle {
+            font-size: 14px;
+            color: var(--meta-color);
+            margin-top: 5px;
         }
-        .status {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 0.5rem 1.5rem;
-            background: var(--primary);
-            color: white;
-            border-radius: 9999px;
-            font-weight: bold;
+        
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+        .post-item {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+        .post-date {
+            width: 100px;
+            font-size: 14px;
+            color: var(--meta-color);
+            font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+            flex-shrink: 0;
+        }
+        .post-link {
+            font-size: 16px;
+            color: var(--link-color);
             text-decoration: none;
-            transition: transform 0.2s;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
         }
-        .status:hover {
-            transform: scale(1.05);
+        .post-link:hover {
+            border-bottom-color: var(--hover-color);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        
+        footer {
+            margin-top: 80px;
+            font-size: 12px;
+            color: var(--meta-color);
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Park-hyojoon's Universe</h1>
-        <p>AI와 예술, 그리고 코딩이 만나는 공간</p>
-        <p>Github Blog Editor를 통해 업로드된 글들이 곧 여기에 나타납니다.</p>
-        <div class="status">준비 중 🚀</div>
-    </div>
+
+<header>
+    <h1>Park-hyojoon's Blog</h1>
+    <div class="subtitle">Minimalist Space for Thoughts</div>
+</header>
+
+<main>
+    <ul class="post-list">
+        {% for page in site.pages %}
+            {% if page.path contains '2025/' and page.title %}
+                <li class="post-item">
+                    <span class="post-date">{{ page.date | date: "%Y-%m-%d" }}</span>
+                    <a class="post-link" href="{{ page.url | relative_url }}">{{ page.title }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</main>
+
+<footer>
+    &copy; {{ site.time | date: "%Y" }} Park-hyojoon. Powered by GitHub Pages.
+</footer>
+
 </body>
 </html>
