@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --link-color: #000000;
+            --meta-color: #888888;
+            --hover-color: #000000;
+            --accent-color: #0366d6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+        header { margin-bottom: 40px; }
+        .home-link { font-weight: bold; text-decoration: none; color: var(--text-color); font-size: 1.2rem; }
+        
+        article { margin-bottom: 60px; }
+        h1 { font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+        .post-meta { color: var(--meta-color); font-size: 0.9rem; margin-bottom: 2rem; }
+        
+        /* Markdown Content Styling */
+        article img { max-width: 100%; height: auto; border-radius: 4px; display: block; margin: 20px auto; }
+        article blockquote { border-left: 4px solid #eaeaea; margin: 0; padding-left: 1rem; color: #666; font-style: italic; }
+        
+        /* Navigation & Actions */
+        .post-actions { 
+            margin-top: 50px; 
+            padding-top: 20px; 
+            border-top: 1px solid #eaeaea; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        .nav-links a { display: block; color: var(--link-color); text-decoration: none; margin: 5px 0; }
+        .nav-links a:hover { text-decoration: underline; }
+        .nav-label { font-size: 0.75rem; color: var(--meta-color); text-transform: uppercase; letter-spacing: 1px; }
+        
+        .edit-link { color: var(--accent-color); text-decoration: none; font-weight: 500; }
+        .edit-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="{{ "/" | relative_url }}" class="home-link">← Home</a>
+</header>
+
+<article>
+    <header>
+        <h1>{{ page.title }}</h1>
+        <div class="post-meta">
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+        </div>
+    </header>
+
+    <div class="post-content">
+        {{ content }}
+    </div>
+</article>
+
+<footer>
+    <div class="post-actions">
+        <!-- Navigation -->
+        <div class="nav-links">
+            {% if page.previous %}
+                <div class="nav-item">
+                    <div class="nav-label">Previous Post</div>
+                    <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
+                </div>
+            {% endif %}
+            <br>
+            {% if page.next %}
+                <div class="nav-item">
+                    <div class="nav-label">Next Post</div>
+                    <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- GitHub Action -->
+        <div>
+            <a href="https://github.com/Park-hyojoon/Park-hyojoon.github.io/blob/main/{{ page.path }}" class="edit-link" target="_blank">
+                Edit on GitHub
+            </a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
